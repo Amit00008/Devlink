@@ -5,15 +5,17 @@ import { db } from "../../../utils/db";
 import { TwicPicture } from "@twicpics/components/react";
 import { eq } from "drizzle-orm";
 import {  Layers2, LineChartIcon, Link2, Trash2 } from "lucide-react";
-import React from "react";
+import React, { useContext } from "react";
 import { supabase } from "../../../utils/supabase";
 import Swal from "sweetalert2";
+import { PreviewUpdateContext } from "../../../app/_context/PreviewUpdateContext";
 
 
 function ProjectListEdit({ projectList, refreshData }) {
   const [selected, setSelected] = React.useState("");
   let timeoutId;
   const [logos, setLogos] = React.useState({});
+   const {updatePreview,setUpdatePreview} = useContext(PreviewUpdateContext);
 
   const { user } = useUser();
 
@@ -29,6 +31,7 @@ function ProjectListEdit({ projectList, refreshData }) {
           .where(eq(project.id, projectId));
         if (res) {
           console.log("updated");
+          setUpdatePreview(updatePreview + 1);
         }
       } catch (error) {
         setError("Error: ", error);

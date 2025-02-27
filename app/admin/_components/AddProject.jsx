@@ -6,11 +6,13 @@ import { Link2 } from "lucide-react";
 import React, { useContext } from "react";
 import { UserDetailContext } from "../../_context/UserDetailContext";
 import { motion } from "framer-motion";
+import { PreviewUpdateContext } from "../../../app/_context/PreviewUpdateContext";
 
 function AddProject({ refreshData }) {
     const [openUrlInput, setOpenUrlInput] = React.useState(false);
     const [success, setSuccess] = React.useState('');
     const [error, setError] = React.useState('');
+     const {updatePreview,setUpdatePreview} = useContext(PreviewUpdateContext);
     const {user} = useUser();
     const [loading, setLoading] = React.useState(false);
     const { userData } = useContext(UserDetailContext);
@@ -28,7 +30,7 @@ function AddProject({ refreshData }) {
         })
         setOpenUrlInput(false);
         if (res){
-
+            setUpdatePreview(updatePreview+1);
             setSuccess('Project Added Successfully');
             refreshData();
             setLoading(false);

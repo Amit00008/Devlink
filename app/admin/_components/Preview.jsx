@@ -1,11 +1,18 @@
-import React from "react";
-import { motion } from "framer-motion";
+"use client";
+
+import { UserDetailContext } from "../../../app/_context/UserDetailContext";
+import { PreviewUpdateContext } from "../../../app/_context/PreviewUpdateContext";
+import React, { useContext } from "react";
+
 
 function Preview() {
+  const { userData } = useContext(UserDetailContext);
+  
+   const {updatePreview} = useContext(PreviewUpdateContext);
   return (
     <div className="flex justify-center items-center h-screen md:fixed md:right-16 hidden md:flex">
       {/* Phone Frame */}
-      <motion.div
+      <div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -17,12 +24,13 @@ function Preview() {
         {/* Screen */}
         <div className="h-full w-full bg-gray-950 rounded-[30px] flex items-center justify-center text-white overflow-hidden">
           <iframe
-            src={`${process.env.NEXT_PUBLIC_BASE_URL}/autisticamit}`}
+          key={updatePreview}
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}/${userData.name}}`}
             title="Profile"
             className="w-full h-full rounded-[30px] border-none"
           ></iframe>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

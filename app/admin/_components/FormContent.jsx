@@ -11,22 +11,23 @@ import ProjectListEdit from './ProjectListEdit';
 function FormContent() {
 const {user} = useUser();
 const [projectList,setProjects] = React.useState([]);
- const GetProjectLi  = async () => {
-           const res = await db.select().from(project)
-           .where(eq(project.emailRef,user?.primaryEmailAddress?.emailAddress))
-           .orderBy(desc(project.id))
 
-           console.log(res);
-
-           setProjects(res);
-
- }
 
  useEffect(()=>{
+    const GetProjectLi  = async () => {
+        const res = await db.select().from(project)
+        .where(eq(project.emailRef,user?.primaryEmailAddress?.emailAddress))
+        .orderBy(desc(project.id))
+
+        console.log(res);
+
+        setProjects(res);
+
+}
     if (user) {
         GetProjectLi();
     }
- },[user])
+ },[user,GetProjectLi]);
 
 return (
     <div className='py-10 overflow-auto'>

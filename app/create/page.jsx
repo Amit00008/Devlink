@@ -15,22 +15,23 @@ function CreateUserName() {
   const router = useRouter();
 
   useEffect(()=>{
+    const CheckUser = async () => {
+          
+      const res = await db.select().from(userInfo)
+      .where(eq(userInfo.email,user?.primaryEmailAddress?.emailAddress));
+
+      console.log(res);
+
+     if (res?.length>0){
+        router.push('/admin');
+     }
+  }
   if (user) {
       CheckUser();
   }
-  },[user])
+  },[user,CheckUser])
   // checking the user
-   const CheckUser = async () => {
-          
-          const res = await db.select().from(userInfo)
-          .where(eq(userInfo.email,user?.primaryEmailAddress?.emailAddress));
-  
-          console.log(res);
-  
-         if (res?.length>0){
-            router.push('/admin');
-         }
-      }
+   
 
 
 

@@ -13,17 +13,18 @@ function Provider({children}) {
     ]);
 
 
-    const GetUserDetails = async () => {
+   
+    useEffect(()=>{
+      const GetUserDetails = async () => {
         const res = await db.select().from(userInfo)
         .where(eq(userInfo.email,user?.primaryEmailAddress?.emailAddress));
         setUserData(res[0]);
     }
 
-    useEffect(()=>{
        if (user) {
         GetUserDetails();
        }
-    },[user]);
+    },[user, GetUserDetails]);
   return (
     <UserDetailContext.Provider value={{userData,setUserData}}>
    

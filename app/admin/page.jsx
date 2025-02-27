@@ -15,14 +15,7 @@ function Admin() {
     const router = useRouter();
 
     useEffect(()=>{
-
-       if (user) {
-        CheckUser();
-       }
-
-    },[user])
-
-    const CheckUser = async () => {
+      const CheckUser = async () => {
         
         const res = await db.select().from(userInfo)
         .where(eq(userInfo.email,user?.primaryEmailAddress?.emailAddress));
@@ -35,6 +28,13 @@ function Admin() {
 
         }
     }
+       if (user) {
+        CheckUser();
+       }
+
+    },[user,CheckUser])
+
+   
   return (
     <div className=''>
       <div className='grid lg:grid-cols-3 grid-cols-1'>

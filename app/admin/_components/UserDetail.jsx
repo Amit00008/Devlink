@@ -8,9 +8,11 @@ import { useUser } from "@clerk/nextjs";
 import { UserDetailContext } from "../../_context/UserDetailContext";
 import { supabase } from "../../../utils/supabase";
 import {  TwicPicture } from "@twicpics/components/react";
+import { PreviewUpdateContext } from "../../../app/_context/PreviewUpdateContext";
 
 function UserDetail() {
     const {user} = useUser();
+    const {updatePreview,setUpdatePreview} = useContext(PreviewUpdateContext);
     const { userData } = useContext(UserDetailContext);
     let timeoutId;
     const [selected, setSelected] = React.useState('');
@@ -34,6 +36,7 @@ function UserDetail() {
          }).where(eq(userInfo.email,user?.primaryEmailAddress?.emailAddress))
        if (res){
               console.log('updated');
+              setUpdatePreview(updatePreview+1);
        } 
        } catch (error) {
         setError('Error: ',error);
@@ -67,6 +70,7 @@ function UserDetail() {
                 setPfp(filePath);
               setSuccess('');
               setSuccess('Profile Image Updated');
+              setUpdatePreview(updatePreview+1);
        } 
        } catch (error) {
               setError('Error: ' ,error.message);

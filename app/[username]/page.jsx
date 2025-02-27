@@ -7,6 +7,8 @@ import { UserDetailContext } from "../_context/UserDetailContext";
 function UserPage() {
   const { userData } = useContext(UserDetailContext);
 
+   
+
   useEffect(() => {
     if(userData){
       document.title = `${userData.name} | User Profile`;
